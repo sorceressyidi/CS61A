@@ -1,2 +1,2 @@
-# CS61A 2020
+# CS61A
 * My solutions for cs61a 2020
