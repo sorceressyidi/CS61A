@@ -14,7 +14,7 @@ def print_sums(n):
                 return print_sums(n+k)
         return next_sum
 
-# Also Hard to think
+
 def all_nums(k):
     def h(k, prefix):
         if k == 0:
