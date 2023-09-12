@@ -44,6 +44,10 @@ def g(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n <= 3:
+        return n
+    else:
+        return g(n-1) + 2*g(n-2) + 3*g(n-3)
 
 def g_iter(n):
     """Return the value of G(n), computed iteratively.
@@ -64,6 +68,15 @@ def g_iter(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n <= 3:
+        return n
+    else:
+        n1,n2,n3,cnt = 1,2,3,3
+        while cnt < n:
+            n1, n2, n3= n2, n3, 3*n1 + 2*n2 + n3,
+            cnt +=1
+        return n3
+
 
 
 def missing_digits(n):
@@ -94,8 +107,19 @@ def missing_digits(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n < 10:
+        return 0
+    else:
+        n1 = n // 10
+        n2 = n % 10
+        n3 = n1 % 10
+        if n3 == n2:
+            return missing_digits(n1)
+        else:
+            return missing_digits(n1)+(n2-n3-1)
+        
 
-
+# Think this Q is a little hard to think
 def count_change(total):
     """Return the number of ways to make change for total.
 
@@ -113,6 +137,20 @@ def count_change(total):
     True
     """
     "*** YOUR CODE HERE ***"
+    def change(tot,cnt):
+        if tot == 0:
+            return 1
+        elif tot <(1<<cnt):
+            return 0
+        else:
+            return change(tot-(1<<cnt),cnt)+change(tot,cnt+1)
+        
+    return change(total,0)
+            
+  
+            
+        
+    
 
 
 def print_move(origin, destination):
@@ -148,6 +186,15 @@ def move_stack(n, start, end):
     """
     assert 1 <= start <= 3 and 1 <= end <= 3 and start != end, "Bad start/end"
     "*** YOUR CODE HERE ***"
+    mid = 6 - start - end
+    if n == 1:
+        print_move(start,end)
+    else:
+        move_stack(n-1,start,mid)
+        print_move(start,end)
+        move_stack(n-1,mid,end)
+    return
+        
 
 
 from operator import sub, mul
@@ -162,5 +209,7 @@ def make_anonymous_factorial():
     >>> check(HW_SOURCE_FILE, 'make_anonymous_factorial', ['Assign', 'AugAssign', 'FunctionDef', 'Recursion'])
     True
     """
-    return 'YOUR_EXPRESSION_HERE'
-
+    #Below recursion
+    #return lambda n: 1 if n == 1 else make_anonymous_factorial()(n-1)*n
+    from functools import reduce
+    return lambda n:reduce(mul, range(1, n + 1))
